@@ -1,0 +1,83 @@
+cabal-version: 2.4
+name:          crud
+version:       0.1.0.0
+license:       ISC
+license-file:  LICENSE
+author:        Kevin Mullins
+maintainer:    kevin@pnotequalnp.com
+category:      Web
+
+common base
+  default-language:   Haskell2010
+  ghc-options:        -Wall
+  build-depends:      base ^>=4.14.1.0
+  default-extensions:
+    BlockArguments
+    DataKinds
+    DeriveAnyClass
+    DeriveGeneric
+    DerivingStrategies
+    GeneralizedNewtypeDeriving
+    ImportQualifiedPost
+    LambdaCase
+    NamedFieldPuns
+    OverloadedStrings
+    RecordWildCards
+    TypeApplications
+    TypeOperators
+
+library
+  import:          base
+  hs-source-dirs:  src
+  exposed-modules:
+    Crud
+    Crud.Api
+    Crud.Capability.GenerateUUID
+    Crud.Capability.ManageUsers
+    Crud.User
+    Data.Email
+
+  build-depends:
+    , aeson
+    , http-api-data
+    , monad-time
+    , servant-server
+    , sqlite-simple
+    , text
+    , time
+    , transformers
+    , uuid
+
+executable crud
+  import:        base
+  main-is:       Main.hs
+  build-depends:
+    , crud
+    , monad-time
+    , mtl
+    , servant-server
+    , sqlite-simple
+    , warp
+
+test-suite crud-test
+  import:         base
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is:        Driver.hs
+  other-modules:
+    Test
+    TestM
+
+  build-depends:
+    , containers
+    , crud
+    , hedgehog
+    , monad-time
+    , mtl
+    , servant-server
+    , tasty
+    , tasty-hedgehog
+    , text
+    , time
+    , uuid
+    , uuid-types
